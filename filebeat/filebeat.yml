@@ -1,0 +1,21 @@
+filebeat.inputs:
+  - type: log
+    enabled: true
+    paths:
+      - /var/log/*.log
+      - /var/log/messages
+      - /var/log/kern.log
+    ignore_older: 24h
+    fields:
+      environment: production
+      host: debian
+
+filebeat.config.modules:
+  path: ${path.config}/modules.d/*.yml
+  reload.enabled: false
+
+output.logstash:
+  hosts: ["logstash:5044"]
+
+logging.level: info
+logging.to_stderr: true
